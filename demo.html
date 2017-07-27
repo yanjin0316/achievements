@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>轮播</title>
+<style type="text/css">
+*{padding:0;margin:0 auto;list-style-type:none;}
+#Auto{width:100%;height:600px;background-color:blue;position:relative;}
+#Auto .content{}
+#Auto .content ul li{width:100%;height:600px;position:absolute;left:0;top:0;background-size:100% 100% ;}
+#Auto .content ul li+li{display:none;}
+#Auto .slt{width:100%;height:68px;position:absolute;bottom:10px;background:rgba(0,0,0,0.5);filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0,startcolorstr="#7F000000",endcolorstr="#7F000000"); }
+#Auto .slt ul{width:1080px;height:68px;}
+#Auto .slt ul li{width:100px;height:68px;margin:auto 10px;float:left;position:relative;}
+#Auto .slt ul li img{width:100px;height:68px;}
+#Auto .slt ul li p{position:absolute;top:0;left:0;background: black; opacity: 0.5; height: 100%;width: 100%;}
+</style>
+
+</head>
+
+<body>
+   <div id="Auto">
+      <div class="content">
+          <ul>
+              <li style="background-image:url(images/1.jpg);"></li>
+              <li style="background-image:url(images/2.jpg);"></li>
+              <li style="background-image:url(images/3.jpg);"></li>
+              <li style="background-image:url(images/4.jpg);"></li>
+              <li style="background-image:url(images/5.jpg);"></li>
+              <li style="background-image:url(images/6.jpg);"></li>
+              <li style="background-image:url(images/7.jpg);"></li>
+              <li style="background-image:url(images/8.jpg);"></li>
+              <li style="background-image:url(images/9.jpg);"></li>
+          </ul>
+      </div>
+      <div class="slt">
+         <ul>
+              <li><img src="images/1.jpg"><p></p></li>
+              <li><img src="images/2.jpg"><p></p></li>
+              <li><img src="images/3.jpg"><p></p></li>
+              <li><img src="images/4.jpg"><p></p></li>
+              <li><img src="images/5.jpg"><p></p></li>
+              <li><img src="images/6.jpg"><p></p></li>
+              <li><img src="images/7.jpg"><p></p></li>
+              <li><img src="images/8.jpg"><p></p></li>
+              <li><img src="images/9.jpg"><p></p></li> 
+          </ul>
+      </div>
+   </div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+   var _index = 0;
+   var inss = null;
+   $("#Auto .slt ul li").mouseover(function(){
+   	//鼠标移动到底部的图片上时
+	   _index = $(this).index();//获取当前图片的下标
+	   $("#Auto .content ul li").eq(_index).fadeIn().siblings().fadeOut();//显示对应的当前图片，隐藏其他图片
+	   $(this).find("p").stop().fadeOut();//当前的图片变亮
+	   
+	   clearInterval(t);//停止计时器，停止轮播
+   })
+   
+   $("#Auto .slt ul li").mouseout(function(){
+   	//鼠标移出底部的图片时触发
+	   $(this).find("p").stop().fadeIn();//当前图片变暗
+	   t = setInterval("auto1()",3000);//重新开始计时器
+   })
+   function auto1(){
+   	//自动轮播方法
+	   _index++;//获取下一次要显示图片的下标
+	   if(_index == 9){
+	   	//如果到了最后一张图片，从第一张开始继续轮播
+		   _index = 0;
+	   }
+	   $("#Auto .content ul li").eq(_index).stop().fadeIn().siblings().fadeOut();//下一张图片显示，其他隐藏
+	   $("#slt li").find("p").stop().fadeOut().siblings().fadeIn();//对应下部分的图片变亮
+   }
+   t = setInterval("auto1()",2000);//开始轮播
+</script>
+</body>
+</html>
